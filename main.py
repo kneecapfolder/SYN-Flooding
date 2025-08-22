@@ -57,7 +57,6 @@ class FloodApplication:
 
     def stop_attack(self):
         self.flooder.stop()
-        
         self.toggle_attack_button_on()
 
 
