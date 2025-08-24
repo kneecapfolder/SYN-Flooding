@@ -31,7 +31,7 @@ class Flooder:
 
 
     def start(self):
-        t = threading.Thread(target=self.flood)
+        t = threading.Thread(target=self.flood, daemon=True)
         t.start()
 
     def stop(self):
